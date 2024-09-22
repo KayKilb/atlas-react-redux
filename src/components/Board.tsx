@@ -1,5 +1,5 @@
 // src/components/Board.tsx
-import React, { useState } from "react";
+import React from "react";
 import List from "./List";
 
 interface ListType {
@@ -7,14 +7,12 @@ interface ListType {
   title: string;
 }
 
-const Board: React.FC = () => {
-  const [lists, setLists] = useState<ListType[]>([
-    { id: 1, title: "To Do" },
-    { id: 2, title: "To Do" },
-    { id: 3, title: "To Do" },
-    { id: 4, title: "To Do" },
-  ]);
+interface BoardProps {
+  lists: ListType[];
+  setLists: React.Dispatch<React.SetStateAction<ListType[]>>;
+}
 
+const Board: React.FC<BoardProps> = ({ lists, setLists }) => {
   const deleteList = (id: number) => {
     setLists(lists.filter((list) => list.id !== id));
   };
