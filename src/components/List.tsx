@@ -1,77 +1,53 @@
 // src/components/List.tsx
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
+import { deleteList, addCardToList } from "../slices/listsSlice";
+import { RootState } from "../store";
 import NewCardForm from "./NewCardForm";
-import DeleteListButton from "./DeleteListButton";
-
-interface CardType {
-  title: string;
-  description: string;
-}
 
 interface ListProps {
+  listId: string;
   title: string;
-  onDeleteList: () => void;
 }
 
-const List: React.FC<ListProps> = ({ title, onDeleteList }) => {
-  const [cards, setCards] = useState<CardType[]>([
-    {
-      title: "Lorem ipsum dolor",
-      description:
-        "Sed viverra, diam eu facilisis bibendum, ante orci placerat quam",
-    },
-    {
-      title: "Lorem ipsum dolor",
-      description:
-        "Sed viverra, diam eu facilisis bibendum, ante orci placerat quam",
-    },
-    {
-      title: "Lorem ipsum dolor",
-      description:
-        "Sed viverra, diam eu facilisis bibendum, ante orci placerat quam",
-    },
-  ]);
-  const [isHovered, setIsHovered] = useState(false);
+const List: React.FC<ListProps> = ({ listId, title }) => {
+  const dispatch = useDispatch();
+  const cardIds = useSelector(
+    (state: RootState) =>
+      state.lists.lists.find((list) => list.id === listId)?.cardIds || [],
+  );
+  const cards = useSelector((state: RootState) => state.lists.cards);
 
-  const addCard = (title: string, description: string) => {
-    setCards([...cards, { title, description }]);
-  };
-
-  const deleteCard = (index: number) => {
-    const newCards = [...cards];
-    newCards.splice(index, 1);
-    setCards(newCards);
+  const handleAddCard = (cardTitle: string, cardDescription: string) => {
+    dispatch(
+      addCardToList({ listId, title: cardTitle, description: cardDescription }),
+    );
   };
 
   return (
-    <div
-      className="bg-blue-900 relative rounded-lg p-4 text-off-white-light"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Delete button (appears on hover) */}
-      {isHovered && (
-        <div className="absolute right-2 top-2">
-          <DeleteListButton onDelete={onDeleteList} />
-        </div>
-      )}
-
-      {/* List title */}
+    <div className="bg-blue-900 relative rounded-lg p-4 text-off-white-light">
       <h3 className="mb-4 text-center font-bold">{title}</h3>
 
       {/* Render cards */}
-      {cards.map((card, index) => (
+      {cardIds.map((cardId) => (
         <Card
-          key={index}
-          title={card.title}
-          description={card.description}
-          onDelete={() => deleteCard(index)}
+          key={cardId}
+          title={cards[cardId].title}
+          description={cards[cardId].description}
         />
       ))}
 
-      {/* New card form */}
-      <NewCardForm onSave={addCard} />
+      {/* Add new card form */}
+      <NewCardForm onSave={handleAddCard} />
+
+      {/* Delete list button */}
+      <button
+        onClick={() => dispatch(deleteList({ listId }))}
+        className="absolute right-2 top-2 text-white"
+      >
+        X
+      </button>
     </div>
   );
 };

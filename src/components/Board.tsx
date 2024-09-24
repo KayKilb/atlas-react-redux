@@ -1,30 +1,18 @@
 // src/components/Board.tsx
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import List from "./List";
+import { RootState } from "../store";
+import { clearBoard } from "../slices/listsSlice";
 
-interface ListType {
-  id: number;
-  title: string;
-}
-
-interface BoardProps {
-  lists: ListType[];
-  setLists: React.Dispatch<React.SetStateAction<ListType[]>>;
-}
-
-const Board: React.FC<BoardProps> = ({ lists, setLists }) => {
-  const deleteList = (id: number) => {
-    setLists(lists.filter((list) => list.id !== id));
-  };
+const Board: React.FC = () => {
+  const dispatch = useDispatch();
+  const lists = useSelector((state: RootState) => state.lists.lists);
 
   return (
-    <div className="grid grid-cols-4 gap-4 p-4">
+    <div className="mt-20 grid grid-cols-3 gap-4 overflow-auto p-8">
       {lists.map((list) => (
-        <List
-          key={list.id}
-          title={list.title}
-          onDeleteList={() => deleteList(list.id)}
-        />
+        <List key={list.id} listId={list.id} title={list.title} />
       ))}
     </div>
   );
