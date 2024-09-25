@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
     e.preventDefault();
     if (listTitle.trim()) {
       dispatch(addList({ title: listTitle }));
-      setListTitle(""); // Clear input after submission
+      setListTitle(""); // Clears input after submission
     }
   };
 
@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Add List"
+          placeholder="List title"
           value={listTitle}
           onChange={(e) => setListTitle(e.target.value)}
           className="border-0 bg-transparent text-3xl font-semibold text-blue placeholder:text-blue placeholder:opacity-50 focus:outline-none"

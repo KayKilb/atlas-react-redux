@@ -9,17 +9,21 @@ import store from "../store";
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <div className="min-h-screen bg-off-white-light text-blue">
-        {/* Header */}
-        <Header />
+      <div className="bg-blue-900 flex min-h-screen flex-col text-off-white-light">
+        {/* Fixed Header */}
+        <header className="fixed top-0 z-10 w-full">
+          <Header />
+        </header>
 
-        {/* Board */}
-        <div className="bg-blue-900 overflow-auto p-4 text-off-white-light">
+        {/* Scrollable Board */}
+        <main className="bg-blue-900 mb-16 mt-24 flex-grow overflow-y-auto p-4">
           <Board />
-        </div>
+        </main>
 
-        {/* Footer */}
-        <Footer />
+        {/* Fixed Footer */}
+        <footer className="fixed bottom-0 z-10 w-full">
+          <Footer />
+        </footer>
       </div>
     </Provider>
   );
