@@ -5,6 +5,7 @@ import Card from "./Card";
 import NewCardForm from "./NewCardForm";
 import { addCardToList, deleteList } from "../slices/listsSlice";
 import { RootState } from "../store";
+import DeleteListButton from "./DeleteListButton";
 
 interface ListProps {
   listId: string;
@@ -21,19 +22,12 @@ const List: React.FC<ListProps> = ({ listId, title }) => {
 
   return (
     <div className="bg-blue-900 group relative rounded-lg p-4 text-white shadow-md">
-      {/* Title and Delete Button */}
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-xl font-bold">{title}</h3>
-        {/* Delete List Button, appears on hover */}
-        <button
-          onClick={() => dispatch(deleteList({ listId }))}
-          className="bg-red-500 hover:bg-red-600 rounded-full p-2 text-white opacity-0 transition-opacity group-hover:opacity-100"
-        >
-          X
-        </button>
+        {/* Delete button visible on hover */}
+        <DeleteListButton onDelete={() => dispatch(deleteList({ listId }))} />
       </div>
 
-      {/* Cards */}
       <div className="space-y-4">
         {cardIds.map((cardId) => {
           const card = cards[cardId];
@@ -49,10 +43,8 @@ const List: React.FC<ListProps> = ({ listId, title }) => {
         })}
       </div>
 
-      {/* New Card Form */}
       <NewCardForm
         onSave={(title, description) => {
-          // Dispatch the action to add a card to this list
           dispatch(addCardToList({ listId, title, description }));
         }}
       />
