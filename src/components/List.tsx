@@ -20,27 +20,33 @@ const List: React.FC<ListProps> = ({ listId, title }) => {
   const cards = useSelector((state: RootState) => state.cards.cards);
 
   return (
-    <div className="bg-blue-900 p-4 text-white shadow-md">
-      <h3 className="mb-2 text-xl font-bold">{title}</h3>
-
-      {/* Delete List Button */}
-      <button
-        onClick={() => dispatch(deleteList({ listId }))}
-        className="bg-red-500 rounded-full p-2 text-white"
-      >
-        X
-      </button>
+    <div className="bg-blue-900 group relative rounded-lg p-4 text-white shadow-md">
+      {/* Title and Delete Button */}
+      <div className="mb-4 flex items-center justify-between">
+        <h3 className="text-xl font-bold">{title}</h3>
+        {/* Delete List Button, appears on hover */}
+        <button
+          onClick={() => dispatch(deleteList({ listId }))}
+          className="bg-red-500 hover:bg-red-600 rounded-full p-2 text-white opacity-0 transition-opacity group-hover:opacity-100"
+        >
+          X
+        </button>
+      </div>
 
       {/* Cards */}
       <div className="space-y-4">
-        {cardIds.map((cardId) => (
-          <Card
-            key={cardId}
-            cardId={cardId}
-            title={cards[cardId].title}
-            description={cards[cardId].description}
-          />
-        ))}
+        {cardIds.map((cardId) => {
+          const card = cards[cardId];
+          if (!card) return null; // Handle case where card might not exist
+          return (
+            <Card
+              key={cardId}
+              cardId={cardId}
+              title={card.title}
+              description={card.description}
+            />
+          );
+        })}
       </div>
 
       {/* New Card Form */}
