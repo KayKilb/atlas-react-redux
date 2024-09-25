@@ -7,6 +7,14 @@ import Footer from "./Footer";
 import store from "../store";
 
 const App: React.FC = () => {
+  const handleAddList = (title: string) => {
+    // Dispatch action to add a list here
+  };
+
+  const handleClearBoard = () => {
+    // Dispatch action to clear the board here
+  };
+
   return (
     <Provider store={store}>
       <div className="bg-blue-900 flex min-h-screen flex-col text-off-white-light">
@@ -22,7 +30,7 @@ const App: React.FC = () => {
 
         {/* Fixed Footer */}
         <footer className="fixed bottom-0 z-10 w-full">
-          <Footer />
+          <Footer onAddList={handleAddList} onClearBoard={handleClearBoard} />
         </footer>
       </div>
     </Provider>

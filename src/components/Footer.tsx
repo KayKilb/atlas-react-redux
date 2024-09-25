@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
     e.preventDefault();
     if (listTitle.trim()) {
       dispatch(addList({ title: listTitle }));
-      setListTitle(""); // Clears input after submission
+      setListTitle(""); // Clear the input after submission
     }
   };
 

@@ -5,7 +5,7 @@ import logo from "../assets/logo.png"; // Ensure your logo is placed in the asse
 const Header: React.FC = () => {
   return (
     <header className="sticky top-0 z-10 border-b-2 border-blue bg-off-white-light pb-8 pt-8">
-      <img className="logo mx-auto w-56" src={logo} alt="Atlas School Logo" />
+      <img className="mx-auto w-56" src={logo} alt="logo" />
     </header>
   );
 };

@@ -12,30 +12,34 @@ const NewCardForm: React.FC<NewCardFormProps> = ({ onSave }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (title.trim() && description.trim()) {
-      // Trigger onSave with both title and description
       onSave(title, description);
-      setTitle(""); // Clear the title input after save
-      setDescription(""); // Clear the description input after save
+      setTitle("");
+      setDescription("");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col items-start p-4">
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
       <input
         type="text"
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="mb-4 w-full border-0 bg-transparent text-xl font-black"
+        className="text-blue-900 rounded border p-2 font-bold"
+        // font-bold for the bold title
       />
       <textarea
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="mb-4 w-full border-0 bg-transparent text-lg"
+        className="text-blue-900 rounded border p-2"
         rows={3}
+        // text-blue-900 for dark blue description text
       />
-      <button type="submit" className="bg-blue-900 text-white">
+      <button
+        type="submit"
+        className="bg-blue-900 rounded px-4 py-2 text-white"
+      >
         Save
       </button>
     </form>

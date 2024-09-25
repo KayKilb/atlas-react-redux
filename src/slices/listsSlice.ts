@@ -2,12 +2,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
-interface Card {
-  id: string;
-  title: string;
-  description: string;
-}
-
 interface List {
   id: string;
   title: string;
@@ -16,12 +10,10 @@ interface List {
 
 interface ListsState {
   lists: List[];
-  cards: Record<string, Card>; // Mapping card IDs to card details
 }
 
 const initialState: ListsState = {
   lists: [],
-  cards: {},
 };
 
 const listsSlice = createSlice({
@@ -43,28 +35,17 @@ const listsSlice = createSlice({
     },
     addCardToList: (
       state,
-      action: PayloadAction<{
-        listId: string;
-        title: string;
-        description: string;
-      }>,
+      action: PayloadAction<{ listId: string; cardId: string }>,
     ) => {
-      const newCard: Card = {
-        id: uuidv4(),
-        title: action.payload.title,
-        description: action.payload.description,
-      };
-      state.cards[newCard.id] = newCard;
       const list = state.lists.find(
         (list) => list.id === action.payload.listId,
       );
       if (list) {
-        list.cardIds.push(newCard.id);
+        list.cardIds.push(action.payload.cardId);
       }
     },
     clearBoard: (state) => {
       state.lists = [];
-      state.cards = {};
     },
   },
 });
