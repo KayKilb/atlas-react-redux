@@ -11,17 +11,17 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ title, description, onDelete }) => {
   return (
-    <div className="group relative rounded-lg bg-off-white-light p-4 text-blue shadow-md transition-shadow duration-300 hover:shadow-lg">
-      <h5 className="text-blue-900 mb-2 text-xl font-black">
-        {/* Title should be bold and dark blue */}
-        {title}
-      </h5>
-      <p className="text-blue-900 text-lg">
-        {/* Description should be regular text and dark blue */}
-        {description}
-      </p>
-      {/* Delete button visible on hover */}
+    <div className="group/card relative flex min-h-24 w-full flex-col items-start rounded bg-off-white-light px-4 py-2 text-blue shadow-md transition-shadow duration-300 hover:shadow-lg">
+      {/* Delete Card Button */}
       <DeleteCardButton onDelete={onDelete} />
+
+      {/* Card Title */}
+      <h5 className="my-2 flex w-full items-center justify-between text-xl font-black">
+        <span>{title}</span>
+      </h5>
+
+      {/* Card Description */}
+      <p className="text-blue-900 mt-0 text-left text-lg">{description}</p>
     </div>
   );
 };

@@ -9,6 +9,10 @@ const NewCardForm: React.FC<NewCardFormProps> = ({ onSave }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  /**
+   * Handles form submission to create a new card.
+   * @param e - Form event.
+   */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (title.trim() && description.trim()) {
@@ -19,30 +23,39 @@ const NewCardForm: React.FC<NewCardFormProps> = ({ onSave }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="text-blue-900 rounded border p-2 font-bold"
-        // font-bold for the bold title
-      />
-      <textarea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="text-blue-900 rounded border p-2"
-        rows={3}
-        // text-blue-900 for dark blue description text
-      />
-      <button
-        type="submit"
-        className="bg-blue-900 rounded px-4 py-2 text-white"
+    <div className="group/new-card m-3 flex h-44 w-full justify-center">
+      <form
+        onSubmit={handleSubmit}
+        className="hidden min-h-24 w-full flex-col items-start rounded bg-off-white-light px-4 text-blue group-hover/new-card:flex"
       >
-        Save
-      </button>
-    </form>
+        <input
+          className="w-11/12 resize-none overflow-auto rounded-t-3xl border-0 bg-off-white-light px-0 py-6 text-xl font-black text-blue outline-none"
+          autoFocus
+          type="text"
+          placeholder="Title"
+          name="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <textarea
+          className="w-11/12 resize-none overflow-auto border-0 bg-off-white-light text-blue outline-none"
+          placeholder="Description"
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        ></textarea>
+        <div className="w-full">
+          <button
+            type="submit"
+            className="hover:bg-teal-dark w-full rounded bg-teal p-4 font-semibold text-off-white-light transition"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

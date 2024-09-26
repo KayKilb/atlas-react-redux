@@ -1,6 +1,6 @@
 // src/components/Header.tsx
 import React from "react";
-import logo from "../assets/logo.png"; // Ensure your logo is placed in the assets directory
+import logo from "../assets/logo.png";
 
 const Header: React.FC = () => {
   return (

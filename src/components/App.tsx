@@ -1,38 +1,59 @@
 // src/components/App.tsx
 import React from "react";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
+import store, { RootState } from "../store";
 import Header from "./Header";
 import Board from "./Board";
 import Footer from "./Footer";
-import store from "../store";
+import { addList, clearBoard } from "../slices/listsSlice";
+import { clearBoard as clearCards } from "../slices/cardsSlice";
+import { v4 as uuidv4 } from "uuid";
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
+  const dispatch = useDispatch();
+
+  /**
+   * Handles adding a new list to the board.
+   * @param title - Title of the new list.
+   */
   const handleAddList = (title: string) => {
-    // Dispatch action to add a list here
+    dispatch(addList({ title }));
   };
 
+  /**
+   * Handles clearing the entire board by removing all lists and cards.
+   */
   const handleClearBoard = () => {
-    // Dispatch action to clear the board here
+    if (window.confirm("Are you sure you want to clear the board?")) {
+      dispatch(clearBoard()); // Clears all lists
+      dispatch(clearCards()); // Clears all cards
+    }
   };
 
   return (
+    <div className="flex min-h-screen flex-col bg-off-white-light text-blue">
+      {/* Fixed Header */}
+      <header className="fixed top-0 z-10 w-full border-b-2 border-blue bg-off-white-light py-8">
+        <Header />
+      </header>
+
+      {/* Scrollable Board */}
+      <main className="mb-16 mt-24 flex-grow overflow-x-auto bg-gray-50 p-6">
+        <Board />
+      </main>
+
+      {/* Fixed Footer */}
+      <footer className="fixed bottom-0 z-10 w-full border-t-2 border-blue bg-off-white-light p-8">
+        <Footer onAddList={handleAddList} onClearBoard={handleClearBoard} />
+      </footer>
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
     <Provider store={store}>
-      <div className="bg-blue-900 flex min-h-screen flex-col text-off-white-light">
-        {/* Fixed Header */}
-        <header className="fixed top-0 z-10 w-full">
-          <Header />
-        </header>
-
-        {/* Scrollable Board */}
-        <main className="bg-blue-900 mb-16 mt-24 flex-grow overflow-y-auto p-4">
-          <Board />
-        </main>
-
-        {/* Fixed Footer */}
-        <footer className="fixed bottom-0 z-10 w-full">
-          <Footer onAddList={handleAddList} onClearBoard={handleClearBoard} />
-        </footer>
-      </div>
+      <AppContent />
     </Provider>
   );
 };
