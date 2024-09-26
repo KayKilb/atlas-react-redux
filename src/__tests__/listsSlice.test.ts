@@ -1,5 +1,5 @@
 // src/__tests__/listsSlice.test.ts
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import listsReducer, {
   addList,
   deleteList,
@@ -21,13 +21,24 @@ describe("listsSlice", () => {
   });
 
   it("should return the initial state", () => {
-    expect(listsReducer(undefined, { type: "unknown" })).toEqual(initialState);
+    const state = listsReducer(undefined, { type: "unknown" });
+    expect(state.lists).toHaveLength(3);
+
+    const titles = state.lists.map((list) => list.title);
+    expect(titles).toContain("To Do");
+    expect(titles).toContain("In Progress");
+    expect(titles).toContain("Done");
+
+    state.lists.forEach((list) => {
+      expect(list.cardIds).toEqual([]);
+      expect(list.id).toBeTruthy(); // Ensures that an ID was generated
+    });
   });
 
   it("should handle addList", () => {
     const action = addList({ title: "New List" });
     const state = listsReducer(initialState, action);
-    expect(state.lists.length).toBe(4);
+    expect(state.lists).toHaveLength(4);
 
     const newList = state.lists[3];
     expect(newList.title).toBe("New List");
@@ -38,7 +49,7 @@ describe("listsSlice", () => {
   it("should handle deleteList", () => {
     const action = deleteList({ listId: "list-2" });
     const state = listsReducer(initialState, action);
-    expect(state.lists.length).toBe(2);
+    expect(state.lists).toHaveLength(2);
     expect(state.lists.find((list) => list.id === "list-2")).toBeUndefined();
   });
 
@@ -52,6 +63,6 @@ describe("listsSlice", () => {
   it("should handle clearBoard", () => {
     const action = clearBoard();
     const state = listsReducer(initialState, action);
-    expect(state.lists.length).toBe(0);
+    expect(state.lists).toHaveLength(0);
   });
 });
