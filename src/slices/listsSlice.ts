@@ -24,11 +24,6 @@ const listsSlice = createSlice({
   name: "lists",
   initialState,
   reducers: {
-    /**
-     * Adds a new list to the board.
-     * @param state - Current state of lists.
-     * @param action - Contains the title of the new list.
-     */
     addList: (state, action: PayloadAction<{ title: string }>) => {
       const newList: List = {
         id: uuidv4(),
@@ -37,23 +32,11 @@ const listsSlice = createSlice({
       };
       state.lists.push(newList);
     },
-
-    /**
-     * Deletes a list from the board.
-     * @param state - Current state of lists.
-     * @param action - Contains the ID of the list to be deleted.
-     */
     deleteList: (state, action: PayloadAction<{ listId: string }>) => {
       state.lists = state.lists.filter(
         (list) => list.id !== action.payload.listId,
       );
     },
-
-    /**
-     * Adds a card ID to a specific list.
-     * @param state - Current state of lists.
-     * @param action - Contains the list ID and the card ID to be added.
-     */
     addCardToList: (
       state,
       action: PayloadAction<{ listId: string; cardId: string }>,
@@ -63,18 +46,34 @@ const listsSlice = createSlice({
         list.cardIds.push(action.payload.cardId);
       }
     },
+    moveCard: (
+      state,
+      action: PayloadAction<{
+        sourceListId: string;
+        destinationListId: string;
+        cardId: string;
+      }>,
+    ) => {
+      const { sourceListId, destinationListId, cardId } = action.payload;
 
-    /**
-     * Clears all lists from the board.
-     * Note: This action only clears lists. Cards should be cleared separately in the cards slice.
-     * @param state - Current state of lists.
-     */
+      const sourceList = state.lists.find((list) => list.id === sourceListId);
+      const destinationList = state.lists.find(
+        (list) => list.id === destinationListId,
+      );
+
+      if (sourceList && destinationList) {
+        // Remove cardId from source list
+        sourceList.cardIds = sourceList.cardIds.filter((id) => id !== cardId);
+        // Add cardId to destination list
+        destinationList.cardIds.push(cardId);
+      }
+    },
     clearBoard: (state) => {
       state.lists = [];
     },
   },
 });
 
-export const { addList, deleteList, addCardToList, clearBoard } =
+export const { addList, deleteList, addCardToList, moveCard, clearBoard } =
   listsSlice.actions;
 export default listsSlice.reducer;

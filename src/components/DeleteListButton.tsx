@@ -9,7 +9,7 @@ const DeleteListButton: React.FC<DeleteListButtonProps> = ({ onDelete }) => {
   return (
     <button
       onClick={onDelete}
-      className="hidden h-[30px] w-[30px] cursor-pointer focus:outline-none group-hover/list:block"
+      className="hover:text-red-500 absolute right-2 top-2 hidden focus:outline-none group-hover/list:block"
       aria-label="Delete List"
     >
       <svg
@@ -18,7 +18,7 @@ const DeleteListButton: React.FC<DeleteListButtonProps> = ({ onDelete }) => {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="h-full w-full"
+        className="text-red-500 h-6 w-6"
       >
         <path
           strokeLinecap="round"

@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
 import NewCardForm from "./NewCardForm";
 import DeleteListButton from "./DeleteListButton";
-import { deleteList, addCardToList } from "../slices/listsSlice";
+import { deleteList, addCardToList, moveCard } from "../slices/listsSlice";
 import { createCard, deleteCard } from "../slices/cardsSlice";
 import { RootState } from "../store";
+import { useDroppable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 
 interface ListProps {
   listId: string;
@@ -40,14 +42,9 @@ const List: React.FC<ListProps> = ({ listId, title }) => {
    */
   const handleDeleteList = () => {
     if (window.confirm("Are you sure you want to delete this list?")) {
-      // Find all card IDs associated with this list
-      const associatedCards = listCards.map((card) => card.id);
-
-      // Dispatch deleteList action
+      // Optionally, delete associated cards
+      listCards.forEach((card) => dispatch(deleteCard({ cardId: card.id })));
       dispatch(deleteList({ listId }));
-
-      // Dispatch deleteCard actions for each associated card
-      associatedCards.forEach((cardId) => dispatch(deleteCard({ cardId })));
     }
   };
 
@@ -59,10 +56,23 @@ const List: React.FC<ListProps> = ({ listId, title }) => {
     dispatch(deleteCard({ cardId }));
   };
 
+  // Set up droppable area
+  const { setNodeRef, isOver } = useDroppable({
+    id: listId,
+  });
+
+  const style = {
+    backgroundColor: isOver ? "#f0f0f0" : undefined,
+  };
+
   return (
     <div className="group/list relative m-3 flex h-auto w-96 flex-col">
       {/* List Container */}
-      <div className="relative flex-grow rounded-lg bg-off-white-light p-4 text-blue shadow-md transition-shadow duration-300 hover:shadow-lg">
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="relative flex-grow rounded-lg bg-off-white-light p-4 text-blue shadow-md transition-shadow duration-300 hover:shadow-lg"
+      >
         {/* Delete List Button */}
         <DeleteListButton onDelete={handleDeleteList} />
 

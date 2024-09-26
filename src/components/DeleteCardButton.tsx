@@ -9,11 +9,11 @@ const DeleteCardButton: React.FC<DeleteCardButtonProps> = ({ onDelete }) => {
   return (
     <button
       onClick={onDelete}
-      className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform cursor-pointer hover:opacity-80 focus:outline-none group-hover:block"
-      aria-label="Delete Card" // useability label, can be removed
+      className="hover:text-red-500 absolute right-2 top-2 hidden focus:outline-none group-hover/card:block"
+      aria-label="Delete Card"
     >
       <svg
-        className="h-[20px] w-[20px]"
+        className="text-red-500 h-5 w-5"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

@@ -1,13 +1,13 @@
 // src/components/App.tsx
 import React from "react";
 import { Provider, useDispatch } from "react-redux";
-import store, { RootState } from "../store";
+import store, { persistor } from "../store";
 import Header from "./Header";
 import Board from "./Board";
 import Footer from "./Footer";
-import { addList, clearBoard } from "../slices/listsSlice";
+import { addList, clearBoard as clearLists } from "../slices/listsSlice";
 import { clearBoard as clearCards } from "../slices/cardsSlice";
-import { v4 as uuidv4 } from "uuid";
+import { PersistGate } from "redux-persist/integration/react";
 
 const AppContent: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const AppContent: React.FC = () => {
    */
   const handleClearBoard = () => {
     if (window.confirm("Are you sure you want to clear the board?")) {
-      dispatch(clearBoard()); // Clears all lists
+      dispatch(clearLists()); // Clears all lists
       dispatch(clearCards()); // Clears all cards
     }
   };
@@ -53,7 +53,9 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <AppContent />
+      <PersistGate loading={null} persistor={persistor}>
+        <AppContent />
+      </PersistGate>
     </Provider>
   );
 };
