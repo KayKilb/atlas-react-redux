@@ -49,7 +49,7 @@ const NewCardForm: React.FC<NewCardFormProps> = ({ onSave }) => {
         <div className="w-full">
           <button
             type="submit"
-            className="hover:bg-teal-dark w-full rounded bg-teal p-4 font-semibold text-off-white-light transition"
+            className="hover:bg-teal-dark w-full rounded p-4 font-semibold text-blue transition"
           >
             Save
           </button>

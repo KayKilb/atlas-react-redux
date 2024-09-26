@@ -33,12 +33,12 @@ const AppContent: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-col bg-blue text-blue">
       {/* Fixed Header */}
-      <header className="fixed top-0 z-10 w-full border-b-2 border-blue bg-off-white-light py-8">
+      <header className="fixed top-0 z-10 w-full border-b-2 border-blue bg-off-white-light py-4">
         <Header />
       </header>
 
       {/* Scrollable Main Content */}
-      <main className="mb-16 mt-24 flex-grow overflow-y-auto bg-blue p-6">
+      <main className="mb-20 mt-32 flex-grow overflow-y-auto bg-blue p-6">
         <Board />
       </main>
 

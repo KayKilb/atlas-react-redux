@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
 import NewCardForm from "./NewCardForm";
 import DeleteListButton from "./DeleteListButton";
-import { deleteList, addCardToList, moveCard } from "../slices/listsSlice";
-import { createCard, deleteCard } from "../slices/cardsSlice";
+import { deleteList, moveCard } from "../slices/listsSlice";
+import { deleteCard, createCard } from "../slices/cardsSlice";
 import { RootState } from "../store";
 import { useDroppable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
@@ -62,7 +62,7 @@ const List: React.FC<ListProps> = ({ listId, title }) => {
   });
 
   const style = {
-    backgroundColor: isOver ? "#f0f0f0" : undefined,
+    backgroundColor: isOver ? "#e0f7fa" : undefined, // Light teal when a card is over
   };
 
   return (
@@ -71,7 +71,7 @@ const List: React.FC<ListProps> = ({ listId, title }) => {
       <div
         ref={setNodeRef}
         style={style}
-        className="relative flex-grow rounded-lg bg-off-white-light p-4 text-blue shadow-md transition-shadow duration-300 hover:shadow-lg"
+        className="relative flex-grow rounded-lg bg-blue px-4 pb-4 pt-8 text-white shadow-md transition-shadow duration-300 hover:shadow-lg"
       >
         {/* Delete List Button */}
         <DeleteListButton onDelete={handleDeleteList} />
