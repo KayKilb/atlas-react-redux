@@ -31,14 +31,14 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-off-white-light text-blue">
+    <div className="flex min-h-screen flex-col bg-blue text-blue">
       {/* Fixed Header */}
       <header className="fixed top-0 z-10 w-full border-b-2 border-blue bg-off-white-light py-8">
         <Header />
       </header>
 
-      {/* Scrollable Board */}
-      <main className="mb-16 mt-24 flex-grow overflow-x-auto bg-gray-50 p-6">
+      {/* Scrollable Main Content */}
+      <main className="mb-16 mt-24 flex-grow overflow-y-auto bg-blue p-6">
         <Board />
       </main>
 

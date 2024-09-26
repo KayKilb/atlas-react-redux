@@ -86,7 +86,7 @@ const Board: React.FC = () => {
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <div className="m-auto h-full w-full overflow-x-auto bg-blue text-center">
+      <div className="w-full flex-grow overflow-x-auto bg-blue text-center">
         <SortableContext
           items={lists.map((list) => list.id)}
           strategy={verticalListSortingStrategy}
